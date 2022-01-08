@@ -1,9 +1,6 @@
-import { createConnection } from 'mysql2'
 const mysql = require('mysql2')
 
-
-
-const conexao = createConnection({
+const conexao = mysql.createConnection({
     host: 'localhost',
     port: 3307,
     user: 'root',
@@ -11,4 +8,4 @@ const conexao = createConnection({
     database: 'agenda-petshop'
 })
 
-export default conexao
+module.exports = conexao
