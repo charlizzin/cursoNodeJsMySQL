@@ -5,14 +5,16 @@ module.exports = (caminho, nomeDoArquivo, callbackImagemCriada) => {
 
     const tiposValidos = ['jpg', 'png', 'jpeg']
     const tipo = path.extname(caminho)
-    const tipoEhValido = tiposValidos.indexOf(tipo.substring(1))
+    const tipoEhValido = tiposValidos.indexOf(tipo.substring(1)) !== -1
 
-    if (tipoEhValido === -1) {
-        console.log('Erro" Tipo de img invalido')
-    } else {
+    if (tipoEhValido) {
         const novoCaminho = `./assets/imagens/${nomeDoArquivo}${tipo}`
         fs.createReadStream(caminho)
             .pipe(fs.createWriteStream(novoCaminho))
-            .on('finish', () => callbackImagemCriada(novoCaminho))
+            .on('finish', () => callbackImagemCriada(false, novoCaminho))
+    } else {
+        const erro = "Tipo é invalido"
+        console.log('Erro" Tipo de img invalido')
+        callbackImagemCriada(erro)
     }
 }
